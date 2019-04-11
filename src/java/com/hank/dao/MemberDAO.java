@@ -32,7 +32,8 @@ public class MemberDAO extends GenericDAO<Member> {
             }            
         });
     }   
-                                              // 此次購物總金額
+    // 此次購物總金額
+   @Transactional(readOnly = false)                                           
     public void submit_member(Member member, int totalConsumption){
         member.setConsumptionTimes(member.getConsumptionTimes()+1);
         int current_totalConsumption = member.getTotalConsumption();
