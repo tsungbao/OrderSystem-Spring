@@ -16,13 +16,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component("cart")
+@Scope("prototype")
 public class Cart implements Subject,Serializable {
     
     private static final long serialVersionUID=1 ;
-
     private Map<Combo, Integer> cartItems = new HashMap<>();
     private ArrayList<Observer> observers = new ArrayList<>();
 
@@ -73,14 +74,14 @@ public class Cart implements Subject,Serializable {
         while (itt.hasNext()) {
             Combo menuItem = itt.next();
             if (menuItem.getName().equals(name)) {
-                Combo newitem = null;
+                Combo newItem = null;
                 try {
                     //準備clone出來
-                    newitem = menuItem.clone();
+                    newItem = menuItem.clone();
                 } catch (CloneNotSupportedException ex) {
                     Logger.getLogger(Cart.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                cartItems.put(newitem, quantity);
+                cartItems.put(newItem, quantity);
                 this.notifyObserver();
                 return;
             }
@@ -172,7 +173,7 @@ public class Cart implements Subject,Serializable {
         //  找不到報錯
         throw new RuntimeException("理論上是不會刪除購物籃中找不到的商品");
     }
-
+                                          //"雪碧,八塊雞塊"
     public void deleteCombo(String name, String description) {
         Set<Combo> itemsInCart = cartItems.keySet();
         Iterator<Combo> it = itemsInCart.iterator();
@@ -218,13 +219,31 @@ public class Cart implements Subject,Serializable {
         cartItems.clear();
         this.notifyObserver();
     }
-
+                                                //"雪碧,八塊雞塊"       //"可樂,八塊雞塊"
     public void alterCombo(String comboName, String original_Description, String new_Description, int quantity) {
         deleteCombo(comboName, original_Description);
         addCart_Combo(comboName, new_Description, quantity);
         this.notifyObserver();
     }
 
+    public int getQuantity(){
+        int quantity =0 ;
+        Collection <Integer> quantities= cartItems.values();
+        for(int q:quantities){
+            quantity+=q;
+        }
+        return quantity;
+    }
+     
+    public int getTotalPrice(){
+        int totalPrice =0;
+        Set<Combo> set = cartItems.keySet();
+        for(Combo item:set){
+            totalPrice+=item.getPrice()*cartItems.get(item);
+        }
+        return totalPrice;
+    }  
+                                                            //"可樂,八塊雞塊"
     private RealCombo changeContentCombo(RealCombo newItem, String description) {
         Menu menu = Context.getMenu();
 
@@ -264,23 +283,5 @@ public class Cart implements Subject,Serializable {
         newItem = comboFactory.createCombo(id, comboName, category, description, bought, contents);
         return newItem;
     }
-
     
-    public int getQuantity(){
-        int quantity =0 ;
-        Collection <Integer> quantities= cartItems.values();
-        for(int q:quantities){
-            quantity+=q;
-        }
-        return quantity;
-    }
-     
-    public int getTotalPrice(){
-        int totalPrice =0;
-        Set<Combo> set = cartItems.keySet();
-        for(Combo item:set){
-            totalPrice+=item.getPrice()*cartItems.get(item);
-        }
-        return totalPrice;
-    }
 }
