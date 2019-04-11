@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("orderService")
 public class OrderService extends GenericService{
@@ -34,7 +35,9 @@ public class OrderService extends GenericService{
         this.cartItems_cartSinglesMap_cartCombosMap_toRequestScope(cart);
         return "deleteAllInCart";
     }
-
+    
+    
+    @Transactional(readOnly=false)
     public String submit(Member member) throws RuntimeException{
         try {
             new MemberDAO().submit_member(member, member.getCart().getTotalPrice());
@@ -55,10 +58,11 @@ public class OrderService extends GenericService{
         return Action.SUCCESS;
     }
     
-    public String changeCombo(RealCombo comboToBeChanged){
+    public String changeCombo(RealCombo comboToBeChanged , int quantity){
         ActionContext ctx = ActionContext.getContext();
         Map<String,Object> request = (Map<String,Object>)ctx.get("request");
         request.put("comboToBeChanged", comboToBeChanged);
+        request.put("quantity", quantity);
         
         return "changeCombo";
     }

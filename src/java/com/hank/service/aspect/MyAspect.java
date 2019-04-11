@@ -1,7 +1,8 @@
 
 package com.hank.service.aspect;
 
-import com.hank.web.action.GenericAction;
+import com.hank.service.GenericService;
+import com.hank.service.RegisterService;
 import com.hank.web.action.RegisterAction;
 import com.opensymphony.xwork2.ActionContext;
 import hibernate_pojo.Member;
@@ -24,15 +25,16 @@ public class MyAspect{
         if(member == null){
             // forward to login.jsp
             // 提示訊息 : 請先登入
-            GenericAction action = (GenericAction)joinPoint.getTarget();
-            action.addActionError("請先登入");
+            GenericService service = (GenericService)joinPoint.getTarget();
+            service.getAction().addActionError("請先登入");
             return "input";
         }
         return joinPoint.proceed();      
     }
     @Around("MyAspect.testWhetherPassword_Equals_PasswordConfirmed_PointCut()")
     public Object testWhetherPassword_Equals_PasswordConfirmed_Aspect(ProceedingJoinPoint joinPoint) throws Throwable{
-        RegisterAction registerAction = (RegisterAction)joinPoint.getTarget();
+        RegisterService registerService = (RegisterService)joinPoint.getTarget();
+        RegisterAction registerAction = (RegisterAction)registerService.getAction();
         String password = registerAction.getMember().getPassword();
         String password_confirmed = registerAction.getPassword_confirmed();
         if( !password.equals(password_confirmed) ){
@@ -46,13 +48,14 @@ public class MyAspect{
     
     
     
-    @Pointcut(" execution( public * com.hank.service.OrderAction.*(..) ) ||"   //OrderService底下的所有方法(public修飾)
-            + " execution( public * com.hank.service.MainAction.add*InCart(..) )|| " //MainService底下的add*InCart方法(public修飾)
-            + " execution( public * com.hank.service.MainAction.logOut(..) ) ")  //MainService底下的logOut方法(public修飾)
+    @Pointcut(" execution( public * com.hank.service.OrderService.*(..) ) ||"   //OrderService底下的所有方法(public修飾)
+            + " execution( public * com.hank.service.MainService.add*InCart(..) )|| " //MainService底下的add*InCart方法(public修飾)
+            + " execution( public * com.hank.service.MainService.logOut(..) ) ||"
+            + " execution( public * com.hank.service.ChangeComboService.*(..) )")  //ChangeComboService底下的所有方法(public修飾)
     private void testWhetherLoginPointcut(){
         
     }
-     @Pointcut("execution(* com.hank.service.RegisterAction.execute(..) )")
+     @Pointcut("execution(* com.hank.service.RegisterService.register(..) )")
     private void testWhetherPassword_Equals_PasswordConfirmed_PointCut(){
         
     }

@@ -1,5 +1,6 @@
 package com.hank.service;
 
+import com.hank.domain.cart.Cart;
 import com.hank.domain.context.Context;
 import com.hank.domain.item.Combo;
 import com.hank.domain.item.CondimentDecorator;
@@ -7,6 +8,7 @@ import com.hank.domain.item.RealCombo;
 import com.hank.domain.menu.Menu;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
+import hibernate_pojo.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,10 +36,25 @@ public class ChangeComboService extends GenericService{
         return Action.SUCCESS;
 
     }
+    
+    public String changeCombo_submit(RealCombo comboToBeChanged , String new_desc , int quantity){
+        Map<String,Object> session = this.getSession();
+        Member member = (Member)session.get("member");
+        Cart cart = member .getCart();
+        cart.alterCombo(comboToBeChanged.getName(), 
+                Context.description_fromArrayList_toString(comboToBeChanged.getDescription().toString()),
+                new_desc, quantity);
+        return "success";
+    }
 
     private Map<String, Object> getRequest()  {
         ActionContext ctx = ActionContext.getContext();
         return (Map<String, Object>) ctx.get("request");
+    }
+    
+    private Map<String, Object> getSession(){
+        ActionContext ctx = ActionContext.getContext();
+        return ctx.getSession();
     }
 
     private void method1(Map<Combo, ArrayList<Combo>> categories_for_comboToBeChanged, RealCombo comboToBeChanged) {
