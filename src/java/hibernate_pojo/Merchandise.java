@@ -1,5 +1,5 @@
 package hibernate_pojo;
-// Generated 2019/3/21 ¤U¤È 02:57:08 by Hibernate Tools 4.3.1
+// Generated 2019/3/21 ï¿½Uï¿½ï¿½ 02:57:08 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -32,7 +32,7 @@ public class Merchandise  implements java.io.Serializable {
      private boolean saleable;
      private Integer price;
      private Integer bought;
-     private Set orders = new HashSet(0);
+     private Set<Order> orders = new HashSet<>(0);
 
     public Merchandise() {
     }
@@ -125,12 +125,12 @@ public class Merchandise  implements java.io.Serializable {
         this.bought = bought;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="merchandise")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="merchandise", targetEntity=Order.class)
     public Set getOrders() {
         return this.orders;
     }
     
-    public void setOrders(Set orders) {
+    public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
 

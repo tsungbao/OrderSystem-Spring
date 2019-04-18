@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("orderDAO")
 @Transactional
 public class OrderDAO extends GenericDAO<Order> {
-    @Transactional(readOnly = false)
     public void submit_order(Member member) {
         Cart cart = member.getCart();
         Map<Combo, Integer> cartItems = cart.showCartItems();

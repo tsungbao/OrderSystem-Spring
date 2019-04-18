@@ -19,7 +19,9 @@ public class Context {
     private SingleFactory singleFactory;
     private ComboFactory comboFactory;
 
-    public static Menu getMenu() {
+    public static Menu getMenu() {   
+        menu.fillMenuItems();
+        menu.fillCombos();
         return menu;
     }
 

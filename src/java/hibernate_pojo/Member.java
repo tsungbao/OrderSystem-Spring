@@ -36,13 +36,16 @@ public class Member  implements java.io.Serializable {
      private Integer consumptionTimes;
      private Integer totalConsumption;
      private String memberStatus;
-     private Set orders = new HashSet(0);
-     
-     @Autowired
-     @Qualifier("cart")
+     private Set<Order> orders = new HashSet<>(0);
+
      private Cart cart ;
 
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
     public Member() {
+        cart = new Cart();
     }
 
 	
@@ -51,6 +54,7 @@ public class Member  implements java.io.Serializable {
         this.memberPhone = memberPhone;
         this.account = account;
         this.password = password;
+        cart = new Cart();
     }
     public Member(String memberName, String memberPhone, String account, String password, Integer consumptionTimes, Integer totalConsumption, String memberStatus, Set orders) {
        this.memberName = memberName;
@@ -61,6 +65,7 @@ public class Member  implements java.io.Serializable {
        this.totalConsumption = totalConsumption;
        this.memberStatus = memberStatus;
        this.orders = orders;
+       cart = new Cart();
     }
     
     public Cart getCart(){
@@ -149,12 +154,12 @@ public class Member  implements java.io.Serializable {
         this.memberStatus = memberStatus;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="member")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="member", targetEntity=Order.class)
     public Set getOrders() {
         return this.orders;
     }
     
-    public void setOrders(Set orders) {
+    public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
 

@@ -19,8 +19,6 @@ import java.util.logging.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component("cart")
-@Scope("prototype")
 public class Cart implements Subject,Serializable {
     
     private static final long serialVersionUID=1 ;

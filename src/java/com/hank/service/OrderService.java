@@ -37,7 +37,7 @@ public class OrderService extends GenericService{
     }
     
     
-    @Transactional(readOnly=false)
+    @Transactional
     public String submit(Member member) throws RuntimeException{
         try {
             new MemberDAO().submit_member(member, member.getCart().getTotalPrice());

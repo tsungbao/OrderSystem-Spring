@@ -13,12 +13,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Service;
 
-
-@Service("myAspect")
 @Aspect
+@Service("myAspect")
 public class MyAspect{
     
-    @Around("MyAspect.testWhetherLoginPointcut()")
+    @Around("testWhetherLoginPointcut()")
     public Object testWhetherLoginAspect(ProceedingJoinPoint joinPoint) throws Throwable{
         Map<String,Object> session = ActionContext.getContext().getSession();
         Member member = (Member)session.get("member");
@@ -31,7 +30,7 @@ public class MyAspect{
         }
         return joinPoint.proceed();      
     }
-    @Around("MyAspect.testWhetherPassword_Equals_PasswordConfirmed_PointCut()")
+    @Around("testWhetherPassword_Equals_PasswordConfirmed_PointCut()")
     public Object testWhetherPassword_Equals_PasswordConfirmed_Aspect(ProceedingJoinPoint joinPoint) throws Throwable{
         RegisterService registerService = (RegisterService)joinPoint.getTarget();
         RegisterAction registerAction = (RegisterAction)registerService.getAction();

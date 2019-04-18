@@ -29,7 +29,6 @@ public class MerchandiseDAO extends GenericDAO<Merchandise> {
         return getHibernateTemplate().find(hql);
     }
 
-    @Transactional(readOnly = false)
     //套餐組合中的單品也要記得加到
     //做到批量處理
     //預編語句
