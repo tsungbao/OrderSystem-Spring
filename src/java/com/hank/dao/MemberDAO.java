@@ -17,7 +17,7 @@ public class MemberDAO extends GenericDAO<Member> {
         return this.getHibernateTemplate().execute(new HibernateCallback<Member>(){
             @Override
             public Member doInHibernate(Session sn) throws HibernateException {
-                return (Member)sn.createQuery("from Member m where m.account=? and m.password=?;")
+                return (Member)sn.createQuery("from Member m where m.account=? and m.password=?")
                                  .setString(0, account).setString(1,password).uniqueResult();
             }            
         });

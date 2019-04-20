@@ -6,6 +6,7 @@ import com.hank.domain.item.Combo;
 import com.hank.domain.item.RealCombo;
 import com.hank.domain.menu.Menu;
 import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -13,15 +14,19 @@ import org.springframework.stereotype.Component;
 @Component("context")
 public class Context {
 
-    @Autowired
-    @Qualifier("menu")
     private static Menu menu;
     private SingleFactory singleFactory;
     private ComboFactory comboFactory;
 
-    public static Menu getMenu() {   
-        menu.fillMenuItems();
-        menu.fillCombos();
+    @Autowired
+    @Qualifier("menu")
+    public void setMenu(Menu menu) {
+        Context.menu = menu;
+        Context.menu.fillMenuItems();
+        Context.menu.fillCombos();
+    }
+
+    public static Menu getMenu() {
         return menu;
     }
 
