@@ -135,7 +135,7 @@
                                             <!-- quantity 參數 -->
                                             <s:hidden name="itemName" value="%{#request.currentIterate_comboName}"/>
                                             <s:hidden name="description" value="%{#request.currentIterate_comboDescription}"/>
-                                            <s:textfield id="quantity%{#request.currentIterate_comboName}" type="number"  value="1" name="quantity"  min="1" max="30" label="請輸入要購買的數量(%{#request.currentIterate_comboName})"/>
+                                            <s:textfield id="quantity%{#request.currentIterate_comboName}"  label="請輸入要購買的數量(%{#request.currentIterate_comboName})" type="number"  value="1" name="quantity"  min="1" max="30" />
                                             <sj:submit  value="確認" targets="cartStatus" executeScripts="true" formId="quantityForm%{#request.currentIterate_comboName}"  />
                                         </s:form>
                                     </c:when>    
