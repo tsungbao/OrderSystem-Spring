@@ -45,7 +45,7 @@ public class OrderAction extends GenericAction {
     
     
     @Action(value = "/deleteSingleInCart", results = {
-        @Result(name = "deleteAllInCart", location = "order.jsp"),
+        @Result(name = "deleteSingleInCart", location = "order.jsp"),
         @Result(name = "input", location = "login.jsp")})
     public String deleteSingleInCart(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
@@ -55,7 +55,7 @@ public class OrderAction extends GenericAction {
     
     
     @Action(value = "/deleteComboInCart", results = {
-        @Result(name = "deleteAllInCart", location = "order.jsp"),
+        @Result(name = "deleteComboInCart", location = "order.jsp"),
         @Result(name = "input", location = "login.jsp")})
     public String deleteComboInCart(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
