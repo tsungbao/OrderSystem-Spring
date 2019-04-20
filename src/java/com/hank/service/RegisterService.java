@@ -5,13 +5,21 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import hibernate_pojo.Member;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service("registerService")
 public class RegisterService extends GenericService {
-
+    
+    // 使用到的memberDAO必須是要由spring所託管的那個，不能是自己new 出來的，否則
+    // memberDAO中的hibernateTemplate那些都不能使用
+    @Autowired
+    @Qualifier("memberDAO")
+    private MemberDAO memberDAO;
+    
     private boolean checkWhetherDuplicateAccount(String account) {
-        Member member = new MemberDAO().findMember(account);
+        Member member = memberDAO.findMember(account);
 
         if (member == null) {
             // 註冊允許，沒有重複account
@@ -36,7 +44,7 @@ public class RegisterService extends GenericService {
         } else {
             this.byDefault(member);
             //將member存進資料庫裏面
-            new MemberDAO().saveOrUpdate(member);
+            memberDAO.saveOrUpdate(member);
             
             // 將 member 存進session裡面
             ActionContext ctx = ActionContext.getContext();

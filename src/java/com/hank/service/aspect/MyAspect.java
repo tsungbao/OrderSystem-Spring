@@ -28,7 +28,8 @@ public class MyAspect{
             service.getAction().addActionError("請先登入");
             return "input";
         }
-        return joinPoint.proceed();      
+        Object returnValue= joinPoint.proceed();
+        return returnValue;      
     }
     @Around("testWhetherPassword_Equals_PasswordConfirmed_PointCut()")
     public Object testWhetherPassword_Equals_PasswordConfirmed_Aspect(ProceedingJoinPoint joinPoint) throws Throwable{
@@ -49,7 +50,6 @@ public class MyAspect{
     
     @Pointcut(" execution( public * com.hank.service.OrderService.*(..) ) ||"   //OrderService底下的所有方法(public修飾)
             + " execution( public * com.hank.service.MainService.add*InCart(..) )|| " //MainService底下的add*InCart方法(public修飾)
-            + " execution( public * com.hank.service.MainService.logOut(..) ) ||"
             + " execution( public * com.hank.service.ChangeComboService.*(..) )")  //ChangeComboService底下的所有方法(public修飾)
     private void testWhetherLoginPointcut(){
         

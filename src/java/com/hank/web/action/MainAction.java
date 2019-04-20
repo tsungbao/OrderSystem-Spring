@@ -15,8 +15,7 @@ public class MainAction extends GenericAction {
     @Autowired
     @Qualifier("mainService")
     private MainService mainService;
-
-    private Member member;
+    
     private String itemName;
     private String description;
     private int quantity;
@@ -33,7 +32,7 @@ public class MainAction extends GenericAction {
     public String addSingleInCart() {
         // 有要AOP的記得 service.setAction(this) 設置 result = input
         mainService.setAction(this);
-        return mainService.addSingleInCart(member, itemName, quantity);
+        return mainService.addSingleInCart(itemName, quantity);
     }
 
   @Action(value = "/addComboInCart", results = {
@@ -41,26 +40,17 @@ public class MainAction extends GenericAction {
         @Result(name = "input", location = "login.jsp")})
     public String addComboInCart() {
         // 有要AOP的記得 service.setAction(this) 設置 result = input
-        mainService.setAction(this);
-        return mainService.addComboInCart(member, itemName, quantity, description);
+        mainService.setAction(this);   
+        String result = mainService.addComboInCart(itemName, quantity, description);
+        return result;
     }
 
     @Action(value = "/logOut", results = {
-        @Result(name = "logOut", location = "main.jsp"),
-        @Result(name = "input", location = "login.jsp")})
+        @Result(name = "logOut", location = "main.jsp")})
     public String logOut() {
-        // 有要AOP的記得 service.setAction(this) 設置 result = input
-        mainService.setAction(this);
-        return mainService.logOut(member);
+        return mainService.logOut();
     }
 
-    public Member getMember() {
-        return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
 
     public String getItemName() {
         return itemName;

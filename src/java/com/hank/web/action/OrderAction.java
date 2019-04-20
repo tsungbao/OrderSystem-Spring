@@ -20,7 +20,6 @@ public class OrderAction extends GenericAction {
     private OrderService orderService;
     
     private int comboToBeChangedQuantity;
-    private Member member;
     private String name;
     private String description;
     private RealCombo comboToBeChanged;
@@ -30,9 +29,8 @@ public class OrderAction extends GenericAction {
         @Result(name = "input", location = "login.jsp")})
     public String execute(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
-        Cart cart = member.getCart();
         orderService.setAction(this);
-        return orderService.execute(cart);
+        return orderService.execute();
     }
     
     
@@ -41,9 +39,8 @@ public class OrderAction extends GenericAction {
         @Result(name = "input", location = "login.jsp")})
     public String deleteAllInCart(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
-        Cart cart = member.getCart();
         orderService.setAction(this);
-        return orderService.deleteAllInCart(cart);
+        return orderService.deleteAllInCart();
     }
     
     
@@ -52,9 +49,8 @@ public class OrderAction extends GenericAction {
         @Result(name = "input", location = "login.jsp")})
     public String deleteSingleInCart(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
-        Cart cart = member.getCart();
         orderService.setAction(this);
-        return orderService.deleteSingleInCart(cart, name);
+        return orderService.deleteSingleInCart(name);
     }
     
     
@@ -63,9 +59,8 @@ public class OrderAction extends GenericAction {
         @Result(name = "input", location = "login.jsp")})
     public String deleteComboInCart(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
-        Cart cart = member.getCart();
         orderService.setAction(this);
-        return orderService.deleteComboInCart(cart, name, description);
+        return orderService.deleteComboInCart(name, description);
     }
     
     @Action(value = "/submit", results = {
@@ -77,7 +72,7 @@ public class OrderAction extends GenericAction {
         orderService.setAction(this);
         String result="";
         try{
-            result = orderService.submit(member);
+            result = orderService.submit();
         }catch(Exception e){
             result = "fail";
             this.addActionError(e.getMessage());
@@ -94,16 +89,6 @@ public class OrderAction extends GenericAction {
         return orderService.changeCombo(comboToBeChanged,this.comboToBeChangedQuantity);
     }
     
-    
-    
-    public Member getMember() {
-        return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
     public String getName() {
         return name;
     }

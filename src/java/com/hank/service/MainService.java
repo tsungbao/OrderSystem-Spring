@@ -24,7 +24,8 @@ public class MainService extends GenericService {
         return Action.SUCCESS;
     }
     
-    public String addSingleInCart(Member member , String itemName,int quantity){
+    public String addSingleInCart(String itemName,int quantity){
+        Member member = this.getMemberFromSession();
         Cart cart = member.getCart();
         if(quantity==0){
             //還沒輸入數量
@@ -34,7 +35,8 @@ public class MainService extends GenericService {
         return "addSingleInCart";
     }
     
-    public String addComboInCart(Member member , String itemName,int quantity,String description){
+    public String addComboInCart(String itemName,int quantity,String description){
+        Member member = this.getMemberFromSession();
         Cart cart = member.getCart();
         if(quantity==0){
             //還沒輸入數量
@@ -44,7 +46,7 @@ public class MainService extends GenericService {
         return "addComboInCart";
     }
     
-    public String logOut(Member member){
+    public String logOut(){
         Map<String, Object> session = ActionContext.getContext().getSession();
         session.remove("member");
         this.execute();

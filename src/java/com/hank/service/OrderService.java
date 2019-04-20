@@ -12,39 +12,54 @@ import hibernate_pojo.Member;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("orderService")
-public class OrderService extends GenericService{
+public class OrderService extends GenericService {
 
-    public String deleteSingleInCart(Cart cart, String itemName) {
+    public String deleteSingleInCart(String itemName) {
+        Cart cart = this.getCartFromMember();
         cart.deleteItem(itemName);
         this.cartItems_cartSinglesMap_cartCombosMap_toRequestScope(cart);
         return "deleteSingleInCart";
     }
 
-    public String deleteComboInCart(Cart cart, String name, String desc) {
+    public String deleteComboInCart(String name, String desc) {
+        Cart cart = this.getCartFromMember();
         cart.deleteCombo(name, desc);
         this.cartItems_cartSinglesMap_cartCombosMap_toRequestScope(cart);
         return "deleteComboInCart";
     }
 
-    public String deleteAllInCart(Cart cart) {
+    public String deleteAllInCart() {
+        Cart cart = this.getCartFromMember();
         cart.deleteAll();
         this.cartItems_cartSinglesMap_cartCombosMap_toRequestScope(cart);
         return "deleteAllInCart";
     }
-    
-    
+
+    @Autowired
+    @Qualifier("memberDAO")
+    private MemberDAO memberDAO;
+    @Autowired
+    @Qualifier("orderDAO")
+    private OrderDAO orderDAO;
+    @Autowired
+    @Qualifier("merchandiseDAO")
+    private MerchandiseDAO merchandiseDAO;
+
     @Transactional
-    public String submit(Member member) throws RuntimeException{
+    public String submit() throws RuntimeException {
+        Member member = this.getMemberFromSession();
         try {
-            new MemberDAO().submit_member(member, member.getCart().getTotalPrice());
-            new MerchandiseDAO().submit_merchandise(member.getCart());
-            new OrderDAO().submit_order(member);
+            memberDAO.submit_member(member, member.getCart().getTotalPrice());
+            merchandiseDAO.submit_merchandise(member.getCart());
+            orderDAO.submit_order(member);
         } catch (Exception e) {
-            throw new RuntimeException("submit時 資料庫操作發生錯誤");        
+            throw new RuntimeException("submit時 資料庫操作發生錯誤");
         }
 
         //把cart元素removeAll
@@ -52,18 +67,19 @@ public class OrderService extends GenericService{
 
         return "submit";
     }
-    
-    public String execute(Cart cart){
+
+    public String execute() {
+        Cart cart = this.getCartFromMember();
         this.cartItems_cartSinglesMap_cartCombosMap_toRequestScope(cart);
         return Action.SUCCESS;
     }
-    
-    public String changeCombo(RealCombo comboToBeChanged , int quantity){
+
+    public String changeCombo(RealCombo comboToBeChanged, int quantity) {
         ActionContext ctx = ActionContext.getContext();
-        Map<String,Object> request = (Map<String,Object>)ctx.get("request");
+        Map<String, Object> request = (Map<String, Object>) ctx.get("request");
         request.put("comboToBeChanged", comboToBeChanged);
         request.put("quantity", quantity);
-        
+
         return "changeCombo";
     }
 
@@ -92,5 +108,10 @@ public class OrderService extends GenericService{
         request.put("cartRealsMap", cartRealsMap);
         /*cartItems 放到request作用域裡面*/
         request.put("cartItems", cartItems);
+    }
+    
+    private Cart getCartFromMember(){
+        Member member = this.getMemberFromSession();
+        return member.getCart();
     }
 }
