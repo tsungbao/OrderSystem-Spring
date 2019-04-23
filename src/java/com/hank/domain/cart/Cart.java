@@ -1,5 +1,4 @@
 package com.hank.domain.cart;
-
 import com.hank.domain.factory.ComboFactory;
 import com.hank.domain.item.Combo;
 import com.hank.domain.item.RealCombo;
@@ -24,6 +23,7 @@ public class Cart implements Subject,Serializable {
     private static final long serialVersionUID=1 ;
     private Map<Combo, Integer> cartItems = new HashMap<>();
     private ArrayList<Observer> observers = new ArrayList<>();
+    private int cartId;
 
     @Override
     public void registerObserver(Observer observer) {
@@ -57,6 +57,7 @@ public class Cart implements Subject,Serializable {
                 // 原本的cartItems裡面就已經有該商品了
                 int cartItemCurrent_Quantity = (int) cartItems.get(cartItem);
                 cartItems.remove(cartItem);
+                cartItem.setCartId(++cartId);
                 cartItems.put(cartItem, quantity + cartItemCurrent_Quantity);
                 this.notifyObserver();
                 return;
@@ -79,6 +80,7 @@ public class Cart implements Subject,Serializable {
                 } catch (CloneNotSupportedException ex) {
                     Logger.getLogger(Cart.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                newItem.setCartId(++cartId);
                 cartItems.put(newItem, quantity);
                 this.notifyObserver();
                 return;
@@ -143,6 +145,7 @@ public class Cart implements Subject,Serializable {
 
                 int originalNumber = cartItems.get(cartItem);
                 quantity += originalNumber;
+                cartItem.setCartId(++cartId);
                 cartItems.put(cartItem, quantity);
                 this.notifyObserver();
                 return;
@@ -150,6 +153,7 @@ public class Cart implements Subject,Serializable {
         }
 
         //  cartItems 裡面 沒有 名稱且套餐描述皆相符合的cartItem
+        newItem.setCartId(++cartId);
         cartItems.put(newItem, quantity);
         this.notifyObserver();
         return;
@@ -280,6 +284,20 @@ public class Cart implements Subject,Serializable {
 
         newItem = comboFactory.createCombo(id, comboName, category, description, bought, contents);
         return newItem;
+    }
+    
+    public Combo getItemFromCartId(int cartId){
+        Combo returnItem = null;
+        Set<Combo> set = cartItems.keySet();
+        Iterator<Combo> it = set.iterator();
+        while(it.hasNext()){
+            Combo item = it.next();
+            if(item.getCartId() == cartId){
+                returnItem = item;
+                return returnItem;
+            }
+        }
+        return returnItem;
     }
     
 }

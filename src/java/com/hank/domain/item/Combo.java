@@ -7,6 +7,15 @@ public abstract class Combo implements Cloneable{
     protected String name;
     protected String category;
     protected int bought;
+    protected int cartId;
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
 
     public int getId() {
         return id;

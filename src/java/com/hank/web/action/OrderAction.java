@@ -1,10 +1,10 @@
 
 package com.hank.web.action;
 
-import com.hank.domain.cart.Cart;
 import com.hank.domain.item.RealCombo;
 import com.hank.service.OrderService;
-import hibernate_pojo.Member;
+import com.opensymphony.xwork2.ActionContext;
+import java.util.Map;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class OrderAction extends GenericAction {
     private int comboToBeChangedQuantity;
     private String name;
     private String description;
-    private RealCombo comboToBeChanged;
+    private int cartId_comboToBeChanged;
     
     @Action(value = "/order", results = {
         @Result(name = "success", location = "order.jsp"),
@@ -86,7 +86,7 @@ public class OrderAction extends GenericAction {
     public String changeCombo(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
         orderService.setAction(this);
-        return orderService.changeCombo(comboToBeChanged,this.comboToBeChangedQuantity);
+        return orderService.changeCombo(cartId_comboToBeChanged,this.comboToBeChangedQuantity);
     }
     
     public String getName() {
@@ -104,14 +104,6 @@ public class OrderAction extends GenericAction {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public RealCombo getComboToBeChanged() {
-        return comboToBeChanged;
-    }
-
-    public void setComboToBeChanged(RealCombo comboToBeChanged) {
-        this.comboToBeChanged = comboToBeChanged;
-    }   
     
     public int getComboToBeChangedQuantity() {
         return comboToBeChangedQuantity;
@@ -119,5 +111,13 @@ public class OrderAction extends GenericAction {
 
     public void setComboToBeChangedQuantity(int comboToBeChangedQuantity) {
         this.comboToBeChangedQuantity = comboToBeChangedQuantity;
+    }  
+    
+    public int getCartId_comboToBeChanged() {
+        return cartId_comboToBeChanged;
+    }
+
+    public void setCartId_comboToBeChanged(int cartId_comboToBeChanged) {
+        this.cartId_comboToBeChanged = cartId_comboToBeChanged;
     }
 }

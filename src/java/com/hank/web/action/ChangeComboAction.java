@@ -31,14 +31,14 @@ public class ChangeComboAction extends GenericAction{
     
     private String new_desc;
     private int quantity;
-    private RealCombo comboToBeChanged;
+    private int cartId_comboToBeChanged;
 
     @Action(value="/changeCombo_sumit" , results={@Result(name="success",location="/order.action",type="redirectAction"),
                                                   @Result(name="input",  location="login.jsp")})
     public String changeCombo_submit(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
         changeComboService.setAction(this);
-        return changeComboService.changeCombo_submit(comboToBeChanged, new_desc, quantity);
+        return changeComboService.changeCombo_submit(cartId_comboToBeChanged, new_desc, quantity);
     }
     
     
@@ -66,11 +66,11 @@ public class ChangeComboAction extends GenericAction{
     }
     
     
-    public RealCombo getComboToBeChanged() {
-        return comboToBeChanged;
+    public int getCartId_comboToBeChanged() {
+        return cartId_comboToBeChanged;
     }
 
-    public void setComboToBeChanged(RealCombo comboToBeChanged) {
-        this.comboToBeChanged = comboToBeChanged;
+    public void setCartId_comboToBeChanged(int cartId_comboToBeChanged) {
+        this.cartId_comboToBeChanged = cartId_comboToBeChanged;
     }
 }

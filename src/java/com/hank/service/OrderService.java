@@ -74,8 +74,18 @@ public class OrderService extends GenericService {
         return Action.SUCCESS;
     }
 
-    public String changeCombo(RealCombo comboToBeChanged, int quantity) {
+    public String changeCombo(int cartId_comboToBeChanged, int quantity) {
         ActionContext ctx = ActionContext.getContext();
+        
+        Map<String, Object> session = (Map<String, Object>) ctx.getSession();
+        Cart cart = ((Member)session.get("member")).getCart();
+        RealCombo comboToBeChanged = null;
+        try{
+            comboToBeChanged = (RealCombo)cart.getItemFromCartId(cartId_comboToBeChanged);
+        }catch(NullPointerException e){
+            throw new RuntimeException("cart中找不到cartId為cartId_comboToBeChanged的物品");
+        }    
+        
         Map<String, Object> request = (Map<String, Object>) ctx.get("request");
         request.put("comboToBeChanged", comboToBeChanged);
         request.put("quantity", quantity);

@@ -37,10 +37,11 @@ public class ChangeComboService extends GenericService{
 
     }
     
-    public String changeCombo_submit(RealCombo comboToBeChanged , String new_desc , int quantity){
+    public String changeCombo_submit(int cartId_comboToBeChanged , String new_desc , int quantity){
         Map<String,Object> session = this.getSession();
         Member member = (Member)session.get("member");
         Cart cart = member .getCart();
+        RealCombo comboToBeChanged = (RealCombo)cart.getItemFromCartId(cartId_comboToBeChanged);
         cart.alterCombo(comboToBeChanged.getName(), 
                 Context.description_fromArrayList_toString(comboToBeChanged.getDescription().toString()),
                 new_desc, quantity);
