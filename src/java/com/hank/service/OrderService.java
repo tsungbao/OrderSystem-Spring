@@ -59,6 +59,7 @@ public class OrderService extends GenericService {
             merchandiseDAO.submit_merchandise(member.getCart());
             orderDAO.submit_order(member);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("submit時 資料庫操作發生錯誤");
         }
 

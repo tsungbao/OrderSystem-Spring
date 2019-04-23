@@ -64,9 +64,9 @@ public class OrderAction extends GenericAction {
     }
     
     @Action(value = "/submit", results = {
-        @Result(name = "submit", location = "main.jsp"),
+        @Result(name = "submit", location = "main" , type="chain"),
         @Result(name = "input", location = "login.jsp"),
-        @Result(name = "fail" , location="order.jsp")})
+        @Result(name = "fail" , location="order" , type="chain")})
     public String submit(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
         orderService.setAction(this);
@@ -75,7 +75,8 @@ public class OrderAction extends GenericAction {
             result = orderService.submit();
         }catch(Exception e){
             result = "fail";
-            this.addActionError(e.getMessage());
+            this.addActionError(e.getMessage())
+            System.out.println(e.getMessage());
         }
         return result;
     }
