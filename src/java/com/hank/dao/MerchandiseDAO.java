@@ -33,7 +33,7 @@ public class MerchandiseDAO extends GenericDAO<Merchandise> {
     //做到批量處理
     //預編語句
     public void submit_merchandise(Cart cart) {
-        String hql = "update Merchandise m set m.bought = m.bought+? where m.merchandiseName = ? ; ";
+        String hql = "update Merchandise m set m.bought = m.bought+? where m.merchandiseName = ?  ";
         Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
         //預編語句
         Query query = session.createQuery(hql);

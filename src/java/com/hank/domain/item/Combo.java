@@ -1,6 +1,8 @@
 package com.hank.domain.item;
 
-public abstract class Combo implements Cloneable{
+import java.io.Serializable;
+
+public abstract class Combo implements  Cloneable , Serializable{
 
     protected int id;
     protected int price;
