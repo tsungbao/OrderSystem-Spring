@@ -33,7 +33,7 @@ public class ChangeComboAction extends GenericAction{
     private int quantity;
     private int cartId_comboToBeChanged;
 
-    @Action(value="/changeCombo_sumit" , results={@Result(name="success",location="/order.action",type="redirectAction"),
+    @Action(value="/changeCombo_submit" , results={@Result(name="success",location="order",type="redirectAction"),
                                                   @Result(name="input",  location="login.jsp")})
     public String changeCombo_submit(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
