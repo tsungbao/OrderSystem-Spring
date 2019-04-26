@@ -1,4 +1,5 @@
 package com.hank.domain.cart;
+
 import com.hank.domain.factory.ComboFactory;
 import com.hank.domain.item.Combo;
 import com.hank.domain.item.RealCombo;
@@ -18,9 +19,9 @@ import java.util.logging.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-public class Cart implements Subject,Serializable {
-    
-    private static final long serialVersionUID=1 ;
+public class Cart implements Subject, Serializable {
+
+    private static final long serialVersionUID = 1;
     private Map<Combo, Integer> cartItems = new HashMap<>();
     private ArrayList<Observer> observers = new ArrayList<>();
     private int cartId;
@@ -101,20 +102,21 @@ public class Cart implements Subject,Serializable {
         RealCombo newItem = null;
 
         // 從menu套餐找 找到同一個名稱的套餐先把它clone出來
+        A1:
         while (it.hasNext()) {
             RealCombo comboInMenu = (RealCombo) it.next();
             if (comboInMenu.getName().equals(name)) {
                 try {
                     newItem = (RealCombo) comboInMenu.clone();
+                    break A1;
                 } catch (CloneNotSupportedException ex) {
                     Logger.getLogger(Cart.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
 
-        // 看看這個套餐描述跟原本一不一樣
-        boolean noramlCombo = newItem.getDescription().equals(description);
-
+        // 看看這個套餐描述跟原本( newItem.getDescription() )一不一樣        
+        boolean noramlCombo = examineTheSame_new_oldDescription(Context.description_fromArrayList_toString(newItem.getDescription().toString()), description);
         // 不一樣就要重新create一個
         if (!noramlCombo) {
             newItem = this.changeContentCombo(newItem, description);
@@ -133,14 +135,10 @@ public class Cart implements Subject,Serializable {
                     break A1;
                 }
 
-                // 在比對套餐描述
-                String[] descriptions = description.split(",");
-                ArrayList<String> cartItemDescription = ((RealCombo) cartItem).getDescription();
-                List<String> descriptionss = Arrays.asList(descriptions);
-                for (int i = 0; i < descriptionss.size(); i++) {
-                    if (!(cartItemDescription.get(i).equals(descriptionss.get(i)))) {
-                        break A1;
-                    }
+                // 再比對套餐描述
+                String old_desc = Context.description_fromArrayList_toString(((RealCombo) cartItem).getDescription().toString());
+                if (!this.examineTheSame_new_oldDescription(old_desc, description)) {
+                    break A1;
                 }
 
                 int originalNumber = cartItems.get(cartItem);
@@ -175,7 +173,8 @@ public class Cart implements Subject,Serializable {
         //  找不到報錯
         throw new RuntimeException("理論上是不會刪除購物籃中找不到的商品");
     }
-                                          //"雪碧,八塊雞塊"
+    //"雪碧,八塊雞塊"
+
     public void deleteCombo(String name, String description) {
         Set<Combo> itemsInCart = cartItems.keySet();
         Iterator<Combo> it = itemsInCart.iterator();
@@ -191,7 +190,7 @@ public class Cart implements Subject,Serializable {
                     throw new RuntimeException("理論上一定可以轉成RealCombo喔！");
                 }
                 // arrayList 轉成 string
-                ArrayList<String> itemInCart_Description = itemInCart_cd.getDescription();
+                /*ArrayList<String> itemInCart_Description = itemInCart_cd.getDescription();
                 StringBuffer d = new StringBuffer();
                 for (String dd : itemInCart_Description) {
                     if (itemInCart_Description.indexOf(dd) == itemInCart_Description.size() - 1) {
@@ -202,11 +201,12 @@ public class Cart implements Subject,Serializable {
                     }
                 }
 
-                String desc = d.toString();
+                String desc = d.toString();*/
                 //
 
                 //再確認descrpition有沒有相同
-                if (description.equals(desc)) {
+                String old_desc = Context.description_fromArrayList_toString(itemInCart_cd.getDescription().toString());
+                if (this.examineTheSame_new_oldDescription(old_desc, description)) {
                     cartItems.remove(itemInCart);
                     this.notifyObserver();
                     return;
@@ -221,31 +221,47 @@ public class Cart implements Subject,Serializable {
         cartItems.clear();
         this.notifyObserver();
     }
-                                                //"雪碧,八塊雞塊"       //"可樂,八塊雞塊"
+    //"雪碧,八塊雞塊"       //"可樂,八塊雞塊"
+
     public void alterCombo(String comboName, String original_Description, String new_Description, int quantity) {
         deleteCombo(comboName, original_Description);
         addCart_Combo(comboName, new_Description, quantity);
         this.notifyObserver();
     }
 
-    public int getQuantity(){
-        int quantity =0 ;
-        Collection <Integer> quantities= cartItems.values();
-        for(int q:quantities){
-            quantity+=q;
+    public int getQuantity() {
+        int quantity = 0;
+        Collection<Integer> quantities = cartItems.values();
+        for (int q : quantities) {
+            quantity += q;
         }
         return quantity;
     }
-     
-    public int getTotalPrice(){
-        int totalPrice =0;
+
+    public int getTotalPrice() {
+        int totalPrice = 0;
         Set<Combo> set = cartItems.keySet();
-        for(Combo item:set){
-            totalPrice+=item.getPrice()*cartItems.get(item);
+        for (Combo item : set) {
+            totalPrice += item.getPrice() * cartItems.get(item);
         }
         return totalPrice;
-    }  
-                                                            //"可樂,八塊雞塊"
+    }
+
+    public Combo getItemFromCartId(int cartId) {
+        Combo returnItem = null;
+        Set<Combo> set = cartItems.keySet();
+        Iterator<Combo> it = set.iterator();
+        while (it.hasNext()) {
+            Combo item = it.next();
+            if (item.getCartId() == cartId) {
+                returnItem = item;
+                return returnItem;
+            }
+        }
+        return returnItem;
+    }
+    //"可樂,八塊雞塊"
+
     private RealCombo changeContentCombo(RealCombo newItem, String description) {
         Menu menu = Context.getMenu();
 
@@ -285,19 +301,23 @@ public class Cart implements Subject,Serializable {
         newItem = comboFactory.createCombo(id, comboName, category, description, bought, contents);
         return newItem;
     }
-    
-    public Combo getItemFromCartId(int cartId){
-        Combo returnItem = null;
-        Set<Combo> set = cartItems.keySet();
-        Iterator<Combo> it = set.iterator();
-        while(it.hasNext()){
-            Combo item = it.next();
-            if(item.getCartId() == cartId){
-                returnItem = item;
-                return returnItem;
+
+    private boolean examineTheSame_new_oldDescription(String old_desc, String new_desc) {
+        String[] old_desc_array = old_desc.split(",");
+        String[] new_desc_array = new_desc.split(",");
+
+        if (old_desc.length() != new_desc.length()) {
+            return false;
+        }
+
+        for (int i = 0; i < new_desc_array.length; i++) {
+            if (Arrays.asList(old_desc_array).contains(new_desc_array[i])) {
+
+            } else {
+                return false;
             }
         }
-        return returnItem;
+        return true;
     }
-    
+
 }

@@ -75,7 +75,7 @@ public class OrderAction extends GenericAction {
             result = orderService.submit();
         }catch(Exception e){
             result = "fail";
-            this.addActionError(e.getMessage())
+            this.addActionError(e.getMessage());
             System.out.println(e.getMessage());
         }
         return result;
