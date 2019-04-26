@@ -75,14 +75,14 @@ public class OrderAction extends GenericAction {
             result = orderService.submit();
         }catch(Exception e){
             result = "fail";
-            this.addActionError(e.getMessage())
+            this.addActionError(e.getMessage());
             System.out.println(e.getMessage());
         }
         return result;
     }
     
      @Action(value = "/changeCombo_order", results = {
-        @Result(name = "changeCombo", location = "/changeCombo.action" , type="chain"),
+        @Result(name = "changeCombo", location = "changeCombo" , type="chain"),
         @Result(name = "input", location = "login.jsp")})
     public String changeCombo(){
         // 有要AOP的記得 service.setAction(this)  設置 result = input
