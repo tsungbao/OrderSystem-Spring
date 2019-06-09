@@ -36,7 +36,7 @@ public class OrderDAO extends GenericDAO<Order> {
             order.setOrderId(maxId);
             order.setQuantity(quantity);
             order.setTime(new Date());
-            Merchandise mer = getHibernateTemplate().load(Merchandise.class, item_inEntry.getId()) ;// orderDAO這邊還需要加一個order.setMerchandise()
+            Merchandise mer = getHibernateTemplate().get(Merchandise.class, item_inEntry.getId()) ;// orderDAO這邊還需要加一個order.setMerchandise()
             order.setMerchandise(mer);
             
             
@@ -50,7 +50,11 @@ public class OrderDAO extends GenericDAO<Order> {
         return this.getHibernateTemplate().execute(new HibernateCallback<Integer>() {
             @Override
             public Integer doInHibernate(Session sn) throws HibernateException {
-                return (int) sn.createQuery(hql).uniqueResult();
+                Integer maxId = (Integer) sn.createQuery(hql).uniqueResult();
+                if(maxId == null){
+                    maxId=0;
+                }
+                return (int)maxId;
             }
         });
     }

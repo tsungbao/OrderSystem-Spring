@@ -9,7 +9,7 @@
                 <div class="header-top">
                     <div class="logo">
                         <a href="main">Tsung-Bao</a>
-                        </div>
+                    </div>
                         <div class="login-bars">
                         <a class="btn btn-default log-bar" href="register">註冊</a>
                         <c:choose>

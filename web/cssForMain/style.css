@@ -10,17 +10,17 @@ h1, h2, h3 {margin: 0;}
 ul, ol, li{margin: 0; padding: 0;}
 p {margin: 0;padding: 0;}
 body{
-	margin:0;
-	padding:0;
+    margin:0;
+    padding:0;
 }
 /*--fonts--*/
 @font-face{
-	font-family: 'Didact Gothic';
-	src:url(../fonts/Didact_Gothic/DidactGothic.ttf) format('truetype');
+    font-family: 'Didact Gothic';
+    src:url(../fonts/Didact_Gothic/DidactGothic.ttf) format('truetype');
 }
 @font-face{
-	font-family: 'Pathway Gothic One';
-	src:url(../fonts/Pathway_Gothic_One/PathwayGothicOne-Regular.ttf) format('truetype');
+    font-family: 'Pathway Gothic One';
+    src:url(../fonts/Pathway_Gothic_One/PathwayGothicOne-Regular.ttf) format('truetype');
 }
 .header-top{
     position: relative;
@@ -400,7 +400,7 @@ span.fel-fal-bar2{
     font-size: 15px;
 }
 .quick-view a, .quick-view div {
-     font-family: 'Pathway Gothic One';
+    font-family: 'Pathway Gothic One';
     background-color:#ff7244;    /*-- --*/
     padding: 5px;
     font-weight: 400;
@@ -606,7 +606,7 @@ ol.breadcrumb li a:hover{
     width: 75%;
 }
 .rating-stars{
-   width:25%;
+    width:25%;
     padding-top: 72px;
 }
 .flex-control-thumbs li {
@@ -1136,6 +1136,17 @@ div textarea {
     border: none;
 }
 /*--responsive-starts-here--*/
+
+@media screen and (max-width:900px){
+    .login-bars {
+        position: relative;
+        top: 5px;
+        right: 0%;
+    }
+    .box_1 {
+    margin: 10px;
+}
+}
 @media screen and (max-width: 1024px){
     .collapse-pdng {
         margin: 0 auto;
@@ -1148,8 +1159,8 @@ div textarea {
         margin-left: 117px;
     }
     a.ft-log, a.ft-log:hover {
-    padding: 44px 36PX 44PX;
-	}
+        padding: 44px 36PX 44PX;
+    }
     .bt-logo {
         padding-top: 77px;
     }
@@ -1210,9 +1221,9 @@ div textarea {
         font-weight: 400;
         display: block;
     }
-	.bt-logo {
-		padding-top: 96px;
-}
+    .bt-logo {
+        padding-top: 96px;
+    }
 }
 @media screen and (max-width: 853px){
     .collapse-pdng {
@@ -1298,8 +1309,8 @@ div textarea {
         float: none;
     }
     a.ft-log, a.ft-log:hover {
-    padding: 45px 47PX 55PX;
-	}
+        padding: 45px 47PX 55PX;
+    }
     .bt-logo {
         padding-top: 67px;
     }
@@ -1352,9 +1363,9 @@ div textarea {
     .navbar-nav {
         text-align: center;
     }
-	a.ft-log, a.ft-log:hover {
-    padding: 45px 43PX 55PX;
-}
+    a.ft-log, a.ft-log:hover {
+        padding: 45px 43PX 55PX;
+    }
 }
 @media screen and (max-width:640px){
     .navbar-header {
@@ -1486,9 +1497,9 @@ div textarea {
     }
 }
 @media screen and (max-width: 667px){
-   a.ft-log, a.ft-log:hover {
-    padding: 34px;
-	}
+    a.ft-log, a.ft-log:hover {
+        padding: 34px;
+    }
     .bt-logo {
         padding-top: 88px;
     }
@@ -1645,32 +1656,32 @@ div textarea {
         padding-top: 52px;
     }
     .logo a, .logo a:hover {
-		padding: 10px 36px;
-		font-size: 45px;
-	}
+        padding: 10px 36px;
+        font-size: 45px;
+    }
 }
 @media screen and (max-width: 384px){
-.logo a, .logo a:hover {
-    padding: 7px 23px;
-    font-size: 45px;
-}
-.bt-logo {
-    padding-top: 55px;
-}
+    .logo a, .logo a:hover {
+        padding: 7px 23px;
+        font-size: 45px;
+    }
+    .bt-logo {
+        padding-top: 55px;
+    }
 }
 @media screen and (max-width: 375px){
     .logo a, .logo a:hover {
-    padding: 6px 20px;
-    font-size: 44px;
-	}
+        padding: 6px 20px;
+        font-size: 44px;
+    }
     .bt-logo {
         padding-top: 58px;
     }
 }
 @media screen and (max-width: 360px){
     a.ft-log, a.ft-log:hover {
-    padding: 10px 15px !important;
-	}
+        padding: 10px 15px !important;
+    }
     .logo a, .logo a:hover {
         padding: 5px 20px;
         font-size: 45px;
@@ -1687,9 +1698,9 @@ div textarea {
 }
 @media screen and (max-width:320px){
     .logo a, .logo a:hover {
-    padding: 10px 25px;
-    font-size: 30px;
-	}
+        padding: 10px 25px;
+        font-size: 30px;
+    }
     .navbar-header {
         float: left;
         margin: -72px 0px 0px;

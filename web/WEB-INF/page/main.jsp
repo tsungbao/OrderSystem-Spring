@@ -45,8 +45,13 @@
 
         <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
         <!--script-->
-
-
+        <script>
+            $(function () {
+                $("input[type='submit']").click(function () {
+                    $('html,body').animate({scrollTop: $('#cartStatus').offset().top}, 10);
+                });
+            });
+        </script>
         <sj:head/>
         <s:head />
 
@@ -129,14 +134,12 @@
                                             request.setAttribute("currentIterate_comboDescription", desc);
                                         %>
 
-                                        <s:form name="quantityForm%{#request.currentIterate_comboName}" id="quantityForm%{#request.currentIterate_comboName}"          
-                                                                               action="addComboInCart" 
-                                                                               method="post">
+                                        <s:form name="quantityForm%{#request.currentIterate_comboName}" id="quantityForm%{#request.currentIterate_comboName}" action="addComboInCart" method="post">                                          
                                             <!-- quantity 參數 -->
                                             <s:hidden name="itemName" value="%{#request.currentIterate_comboName}"/>
                                             <s:hidden name="description" value="%{#request.currentIterate_comboDescription}"/>
                                             <s:textfield id="quantity%{#request.currentIterate_comboName}"  label="請輸入要購買的數量(%{#request.currentIterate_comboName})" type="number"  value="1" name="quantity"  min="1" max="30" />
-                                            <sj:submit  value="確認" targets="cartStatus" executeScripts="true" formId="quantityForm%{#request.currentIterate_comboName}"  />
+                                            <sj:submit  value="確認" targets="cartStatus" executeScripts="true" formId="quantityForm%{#request.currentIterate_comboName}" />
                                         </s:form>
                                     </c:when>    
                                     <c:otherwise>
@@ -180,13 +183,13 @@
                         </div>
                         <!-- end normal -->
                         <div class="quick-view">
-                            <sj:div  cssStyle="background-color:yellow;">
+                            <sj:div  cssStyle="text-align:center">
                                 <!-- 輸入欲購買單品數量-->                               
                                 <c:choose>
                                     <c:when test="${sessionScope.member!=null}">    
                                         <c:set var="currentIterate_itemName" scope="request" value="${item.name}"/>
-                                        <s:form name="quantityForm%{#request.currentIterate_itemName}" id="quantityForm%{#request.currentIterate_itemName}" action="addSingleInCart?itemName=%{#request.currentIterate_itemName}" method="post">
-                                            <s:textfield id="quantity%{#request.currentIterate_itemName}" type="number"  value="1" name="quantity"  min="1" max="30" label="請輸入要購買的數量(%{#request.currentIterate_itemName})"/>
+                                        <s:form cssStyle="position:inline-block" name="quantityForm%{#request.currentIterate_itemName}" id="quantityForm%{#request.currentIterate_itemName}" action="addSingleInCart?itemName=%{#request.currentIterate_itemName}" method="post" theme="simple">
+                                            欲購數量:<s:textfield id="quantity%{#request.currentIterate_itemName}" type="number"  value="1" name="quantity"  min="1" max="30"/>
                                             <sj:submit value="確認" targets="cartStatus" executeScripts="true" formId="quantityForm%{#request.currentIterate_itemName}" />
                                         </s:form>
                                     </c:when>    
