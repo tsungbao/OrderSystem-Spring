@@ -41,7 +41,8 @@ public class SingleFactory implements ItemFactory {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(SingleFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+        combo.setImgResc("/images/"+combo.getName()+".jpg");
         return combo;
     }
 }

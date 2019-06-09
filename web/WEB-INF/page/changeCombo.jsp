@@ -66,7 +66,7 @@ categories_for_comboToBeChanged : Map<Combo,ArrayList<Combo>.>
                         <div class="our-services-wrapper mb-60">
                             <div class="services-inner">
                                 <div class="our-services-img">
-                                    <img src="images/s1.png" alt="">
+                                    <img src="<c:url value='${categories_for_comboToBeChanged_entry.key.imgResc}'/>" alt="">
                                 </div>
                                 <div class="our-services-text new_desc" >
                                     <h4 id="<c:out value='${categories_for_comboToBeChanged_entry.key.category}' />">${categories_for_comboToBeChanged_entry.key.name}</h4>
@@ -105,7 +105,7 @@ categories_for_comboToBeChanged : Map<Combo,ArrayList<Combo>.>
                                 <div class="our-services-wrapper mb-60">
                                     <div class="services-inner">
                                         <div class="our-services-img">
-                                            <img src="images/s1.png" alt="">
+                                            <img src="<c:url value='${categoryItem_for_comboToBeChanged.imgResc}'/>" alt="">
                                         </div>
                                         <div class="our-services-text">
                                             <h4>${categoryItem_for_comboToBeChanged.name}</h4>

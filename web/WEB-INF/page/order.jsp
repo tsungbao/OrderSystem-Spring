@@ -107,7 +107,7 @@
                                     </a></div>
                                 <div class="cart-sec simpleCart_shelfItem">
                                     <div class="cart-item cyc">
-                                        <img src="<c:url value='/images/grid4.jpg'/>" class="img-responsive" alt=""/>
+                                        <img src="<c:url value='${cartItem.key.imgResc}'/>" class="img-responsive" alt=""/>
                                     </div>
                                     <div class="cart-item-info">
                                         <ul class="qty">
@@ -137,7 +137,7 @@
                                     </a></div>
                                 <div class="cart-sec simpleCart_shelfItem">
                                     <div class="cart-item cyc">
-                                        <img src="<c:url value='/images/grid4.jpg'/>" class="img-responsive" alt=""/>
+                                        <img src="<c:url value='${cartItem.key.imgResc}'/>" class="img-responsive" alt=""/>
                                     </div>
                                     <div class="cart-item-info">
                                         <ul class="qty">

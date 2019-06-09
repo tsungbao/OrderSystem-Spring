@@ -110,7 +110,7 @@
                     <div class="pull-left fal-box" >
                         <div class=" fall-left">
                             <h3>${realCombo.name}</h3>
-                            <img src="<c:url value='/images/grid4.jpg'/>" alt="/" class="img-responsive fl-img-wid">
+                            <img src="<c:url value='${realCombo.imgResc}'/>" alt="/" class="img-responsive fl-img-wid">
                             <div class=" fall-left">                               
                                 <!-- 輸入欲購買套餐數量-->                                                           
                                 <c:choose>                        
@@ -167,7 +167,7 @@
                         <div class="ih-item square effect3 bottom_to_top">
                             <div class="bottom-2-top">
 
-                                <div class="img"><img src="<c:url value='/images/grid4.jpg'/>" alt="/" class="img-responsive gri-wid"></div>
+                                <div class="img"><img src="<c:url value='${item.imgResc}'/>" alt="/" class="img-responsive gri-wid"></div>
                                 <div class="info">
                                     <div class="pull-left styl-hdn">
                                         <h3>${item.name}</h3>
