@@ -10,6 +10,15 @@ public abstract class Combo implements  Cloneable , Serializable{
     protected String category;
     protected int bought;
     protected int cartId;
+    protected String imgResc;
+
+    public String getImgResc() {
+        return imgResc;
+    }
+
+    public void setImgResc(String imgResc) {
+        this.imgResc = imgResc;
+    }
 
     public int getCartId() {
         return cartId;

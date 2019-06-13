@@ -22,8 +22,12 @@ categories_for_comboToBeChanged : Map<Combo,ArrayList<Combo>.>
         <link href="<c:url value='/cssForMain/bootstrap.min.css'/>" rel="stylesheet" type="text/css">
         <script src="<c:url value='/js/jquery-2.1.4.min.js'/>"></script>
         <script>
+                          <!--   '雪碧'    '飲料'    -->
             function changeCombo(itemName, categoryName) {
                 document.getElementById(categoryName).innerHTML = itemName;
+                var imgItemRes = 'img' + itemName;
+                var imgCategoryRes = 'img' + categoryName;
+                document.getElementById(imgCategoryRes) = document.getElementById(imgItemRes);
             }
 
             $(function () {
@@ -31,6 +35,7 @@ categories_for_comboToBeChanged : Map<Combo,ArrayList<Combo>.>
                     $('html,body').animate({scrollTop: $('#comboItem').offset().top}, 10);
                 });
             });
+          
 
 
         </script>
@@ -66,7 +71,7 @@ categories_for_comboToBeChanged : Map<Combo,ArrayList<Combo>.>
                         <div class="our-services-wrapper mb-60">
                             <div class="services-inner">
                                 <div class="our-services-img">
-                                    <img src="images/s1.png" alt="">
+ <!-- img的id為 'img種類(img飲料)'-->  <img id="img<c:out value='${categories_for_comboToBeChanged_entry.key.category}' />" src="<c:url value='${categories_for_comboToBeChanged_entry.key.imgResc}'/>" alt="">
                                 </div>
                                 <div class="our-services-text new_desc" >
                                     <h4 id="<c:out value='${categories_for_comboToBeChanged_entry.key.category}' />">${categories_for_comboToBeChanged_entry.key.name}</h4>
@@ -105,7 +110,7 @@ categories_for_comboToBeChanged : Map<Combo,ArrayList<Combo>.>
                                 <div class="our-services-wrapper mb-60">
                                     <div class="services-inner">
                                         <div class="our-services-img">
-                                            <img src="images/s1.png" alt="">
+ <!-- img的id為 'img商品名稱(img雪碧)'-->      <img id="img<c:out value='${categoryItem_for_comboToBeChanged.name}' />" src="<c:url value='${categoryItem_for_comboToBeChanged.imgResc}'/>" alt="">
                                         </div>
                                         <div class="our-services-text">
                                             <h4>${categoryItem_for_comboToBeChanged.name}</h4>
