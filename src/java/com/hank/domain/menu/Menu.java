@@ -29,8 +29,6 @@ public class Menu {
     private MerchandiseDAO merchandiseDAO ;
     
     public Menu() {
-        this.fillMenuItems();
-        this.fillCombos();
     }
 
     public void fillMenuItems() {

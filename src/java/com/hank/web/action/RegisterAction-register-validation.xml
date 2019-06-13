@@ -1,0 +1,53 @@
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN"
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+
+
+
+<validators>
+    <field name="member.memberName">
+        <field-validator type="requiredstring">
+            <param name="trim">true</param>
+            <message>請輸入姓名</message>
+        </field-validator>       
+    </field>
+    
+    <field name="member.memberPhone">
+        <field-validator type="requiredstring" short-circuit="true">
+            <param name="trim">true</param>
+            <message>請輸入電話</message>
+        </field-validator>       
+        
+        <field-validator type="regex" short-circuit="true">
+            <param name="regex"><![CDATA[09\d\d-\d\d\d-\d\d\d]]></param>
+            <message>格式為09xx-xxx-xxx</message>
+        </field-validator>  
+    </field>
+    
+    <field name="member.account">
+        <field-validator type="requiredstring">
+            <param name="trim">true</param>
+            <message>請輸入帳號</message>
+        </field-validator>     
+        
+        <field-validator type="stringlength">
+            <param name="trim">true</param>
+            <param name="minLength">6</param>
+            <param name="maxLength">15</param>
+            <message>帳號長度需介於6~15碼之間</message>
+        </field-validator>                
+    </field>
+    
+    <field name="member.password">
+        <field-validator type="requiredstring">
+            <param name="trim">true</param>
+            <message>請輸入密碼</message>
+        </field-validator>     
+        
+        <field-validator type="stringlength">
+            <param name="trim">true</param>
+            <param name="minLength">6</param>
+            <param name="maxLength">15</param>
+            <message>密碼長度需介於6~15碼之間</message>
+        </field-validator>                
+    </field>
+</validators>

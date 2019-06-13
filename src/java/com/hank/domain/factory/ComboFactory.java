@@ -61,13 +61,9 @@ public class ComboFactory implements ItemFactory {
         realCombo.setContent(the_one_in_realCombo_content);
         realCombo.setPrice(the_one_in_realCombo_content.getPrice() - 5);
         //
+        realCombo.setImgResc("/images/"+realCombo.getName()+".jpg");
         return realCombo;
     }
 
-    public static void fromString_toList(String desc , ArrayList<String> desc_list){
-        String[] desc_array = desc.split(",");
-        for(String content : desc_array){
-            desc_list.add(content);
-        }
-    }
+
 }
