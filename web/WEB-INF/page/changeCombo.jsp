@@ -27,7 +27,7 @@ categories_for_comboToBeChanged : Map<Combo,ArrayList<Combo>.>
                 document.getElementById(categoryName).innerHTML = itemName;
                 var imgItemRes = 'img' + itemName;
                 var imgCategoryRes = 'img' + categoryName;
-                document.getElementById(imgCategoryRes) = document.getElementById(imgItemRes);
+                document.getElementById('img'+ categoryName).src = document.getElementById('img' + itemName).src;
             }
 
             $(function () {
